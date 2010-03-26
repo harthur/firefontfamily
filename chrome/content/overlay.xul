@@ -1,12 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="chrome://firefontfamily/skin/overlay.css" type="text/css"?>
-<!DOCTYPE overlay SYSTEM "chrome://firefontfamily/locale/overlay.dtd">
 <overlay id="firefontfamily-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-
   <script src="chrome://firefontfamily/content/overlay.js" type="application/x-javascript"/>
-
-  <stringbundleset id="stringbundleset">
-    <stringbundle id="firefontfamily-strings" src="chrome://firefontfamily/locale/overlay.properties"/>
-  </stringbundleset>
-
 </overlay>

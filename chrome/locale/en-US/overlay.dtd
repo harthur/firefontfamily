@@ -1,8 +1,0 @@
-<!ENTITY firefontfamily.label "Your localized menuitem">
-<!ENTITY firefontfamilyContext.label "Your Menuitem">
-<!ENTITY firefontfamilyContext.accesskey "Y">
-<!ENTITY firefontfamilyToolbarButton.label "Your Toolbar Button">
-<!ENTITY firefontfamilyToolbarButton.tooltip "This is your toolbar button!">
-<!ENTITY firefontfamilySidebar.label "Your Sidebar">
-<!ENTITY firefontfamilyToolbar.name  "example">
-<!ENTITY firefontfamilyToolbar.label "This is an example toolbar. You can hide it under View &gt; toolbars &gt; &firefontfamilyToolbar.name;">
