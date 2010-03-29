@@ -27,26 +27,27 @@ FBL.ns(function() { with (FBL) {
     },
 
     showPanel : function(browser, panel) {
-      if(panel.name != 'stylesheet' && panel.name != 'css')
+      if(panel.name != 'stylesheet')
         return;
-      this.currentPanelDoc = panel.document;
+      this.currentPanelDoc = panel.document; // onCSSInsertRule won't tell you which panel changed
       this.highlightFonts();
 
     },
 
     showSidePanel: function(browser, panel) {
-      if(panel.name != 'stylesheet' && panel.name != 'css')
+      if(panel.name != 'css')
         return;
       this.currentPanelDoc = panel.document;
       this.highlightFonts();
     },
 
     highlightFonts: function() {
-       var panelDoc = Firebug.FontFamilyModule.currentPanelDoc; // onCSSInsertRule etc don't tell you which panel changed
+       var panelDoc = Firebug.FontFamilyModule.currentPanelDoc;
        var props = panelDoc.getElementsByClassName("cssProp");
 
        if(FBTrace.DBG_FIREFONTFAMILY)
-          FBTrace.sysout("fontfamily: highlighting font rules for " + FirebugContext.window.document.location.href);
+          FBTrace.sysout("fontfamily: highlighting font rules for "
+                         + FirebugContext.window.document.location.href);
 
        for(var i = 0; i < props.length; i++) {
          var prop = props[i];
@@ -77,13 +78,13 @@ FBL.ns(function() { with (FBL) {
 
       var rendered = Firebug.FontFamilyModule.getRenderedFontFamily(fontFamily);
 
-      // have to watch out for Times vs. "Times New Roman" errors
-      var index = fontFamily.search(new RegExp(rendered + '(?=\\,|$)'));
-      var before = fontFamily.substring(0, index);
-      var after = fontFamily.substring(index + rendered.length);
+      if(!rendered)
+        return { beforeFamily: beforeFamily, before: fontFamily, rendered: '', after:''};
 
-      return {beforeFamily: beforeFamily, before: before,
-              rendered: rendered, after: after};
+      var regex = new RegExp('(.*?)((?:\,|^)' + rendered + '(?:\,|$))(.*)');
+      var matches = fontFamily.match(regex);
+      return { beforeFamily: beforeFamily, before: matches[1],
+               rendered: matches[2], after: matches[3]};
     },
 
     getRenderedFontFamily : function(fontFamily) {
@@ -94,23 +95,24 @@ FBL.ns(function() { with (FBL) {
       var fonts = fontFamily.split(",")
  
       for(var i = 0; i < fonts.length; i++) {
-        if(fonts[i] == 'serif')
-          return 'serif';
+        var font = fonts[i];
+        if(font == 'serif' || font == 'inherit')
+          return font;
 
         var testString = "abcdefghijklmnopqrstuvwxyz";
 
-        context.font = "800px serif";
+        context.font = "1000px serif";
         var defaultWidth = context.measureText(testString).width;
  
-        context.font = "800px " + fonts[i];
+        context.font = "1000px " + font;
         var fontWidth = context.measureText(testString).width;
  
         if(FBTrace.DBG_FIREFONTFAMILY)
-          FBTrace.sysout("fontfamily: testing font " + fonts[i]
+          FBTrace.sysout("fontfamily: testing font " + font
                 + ", width difference: " + Math.abs(defaultWidth - fontWidth));
 
         if(defaultWidth != fontWidth)
-          return fonts[i];
+          return font;
       }
       return '';
     },
@@ -118,9 +120,9 @@ FBL.ns(function() { with (FBL) {
     CSSPropFontTag : domplate(Firebug.Rep, {
       tag: SPAN({},
              SPAN({}, "$prop.beforeFamily"),
-             SPAN({style: "color: #aaa;"}, "$prop.before"),
+             SPAN({style: "text-decoration: line-through"}, "$prop.before"),
              SPAN({}, "$prop.rendered"),
-             SPAN({style: "color: #aaa;"}, "$prop.after")
+             SPAN({style: "text-decoration: line-through"}, "$prop.after")
             )
     }) 
   })
