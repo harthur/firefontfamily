@@ -81,7 +81,7 @@ FBL.ns(function() { with (FBL) {
       if(!rendered)
         return { beforeFamily: beforeFamily, before: fontFamily, rendered: '', after:''};
 
-      var regex = new RegExp('(.*?)((?:\,|^)' + rendered + '(?:\,|$))(.*)');
+      var regex = new RegExp('(.*?(?:\,|^))(' + rendered + ')((?:\,|$).*)');
       var matches = fontFamily.match(regex);
       return { beforeFamily: beforeFamily, before: matches[1],
                rendered: matches[2], after: matches[3]};
@@ -103,6 +103,7 @@ FBL.ns(function() { with (FBL) {
 
         context.font = "1000px serif";
         var defaultWidth = context.measureText(testString).width;
+        FBTrace.sysout("font size: " + context.font);
  
         context.font = "1000px " + font;
         var fontWidth = context.measureText(testString).width;
@@ -120,9 +121,9 @@ FBL.ns(function() { with (FBL) {
     CSSPropFontTag : domplate(Firebug.Rep, {
       tag: SPAN({},
              SPAN({}, "$prop.beforeFamily"),
-             SPAN({style: "text-decoration: line-through"}, "$prop.before"),
+             SPAN({style: "color: #b2b2b2;"}, "$prop.before"),
              SPAN({}, "$prop.rendered"),
-             SPAN({style: "text-decoration: line-through"}, "$prop.after")
+             SPAN({style: "color: #b2b2b2;"}, "$prop.after")
             )
     }) 
   })
