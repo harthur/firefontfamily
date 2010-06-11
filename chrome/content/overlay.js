@@ -103,7 +103,6 @@ FBL.ns(function() { with (FBL) {
 
         context.font = "1000px serif";
         var defaultWidth = context.measureText(testString).width;
-        FBTrace.sysout("font size: " + context.font);
  
         context.font = "1000px " + font;
         var fontWidth = context.measureText(testString).width;
