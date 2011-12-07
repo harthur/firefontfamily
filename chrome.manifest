@@ -3,4 +3,4 @@ skin      firefontfamily   classic/1.0   chrome/skin/
 locale    firefontfamily   en-US         chrome/locale/en-US/
 
 
-overlay chrome://firebug/content/browserOverlay.xul chrome://firefontfamily/content/overlay.xul
+overlay chrome://firebug/content/firebugOverlay.xul chrome://firefontfamily/content/overlay.xul

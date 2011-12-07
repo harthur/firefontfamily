@@ -27,7 +27,7 @@ FBL.ns(function() { with (FBL) {
     },
 
     showPanel : function(browser, panel) {
-      if(panel.name != 'stylesheet')
+      if(!panel || panel.name != 'stylesheet')
         return;
       this.currentPanelDoc = panel.document; // onCSSInsertRule won't tell you which panel changed
       this.highlightFonts();
@@ -35,7 +35,7 @@ FBL.ns(function() { with (FBL) {
     },
 
     showSidePanel: function(browser, panel) {
-      if(panel.name != 'css')
+      if(!panel || panel.name != 'css')
         return;
       this.currentPanelDoc = panel.document;
       this.highlightFonts();
@@ -47,7 +47,7 @@ FBL.ns(function() { with (FBL) {
 
        if(FBTrace.DBG_FIREFONTFAMILY)
           FBTrace.sysout("fontfamily: highlighting font rules for "
-                         + FirebugContext.window.document.location.href);
+                         + Firebug.currentContext.window.document.location.href);
 
        for(var i = 0; i < props.length; i++) {
          var prop = props[i];
@@ -89,7 +89,7 @@ FBL.ns(function() { with (FBL) {
 
     getRenderedFontFamily : function(fontFamily) {
       // create canvas in owner doc to get @font-face fonts
-      var doc = FirebugContext.window.document;
+      var doc = Firebug.currentContext.window.document;
       var canvas = doc.createElementNS('http://www.w3.org/1999/xhtml', 'canvas');
       var context = canvas.getContext("2d");
       var fonts = fontFamily.split(",")
