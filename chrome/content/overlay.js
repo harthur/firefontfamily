@@ -99,20 +99,27 @@ FBL.ns(function() { with (FBL) {
         if(font == 'serif' || font == 'inherit')
           return font;
 
-        var testString = "abcdefghijklmnopqrstuvwxyz";
+        var text = "abcdefghijklmnopqrstuvwxyz";
 
-        context.font = "1000px serif";
-        var defaultWidth = context.measureText(testString).width;
- 
+        context.font = "1000px " + font + ", serif";
+        let serifWidth = context.measureText(text).width;
+
         context.font = "1000px " + font;
-        var fontWidth = context.measureText(testString).width;
- 
-        if(FBTrace.DBG_FIREFONTFAMILY)
-          FBTrace.sysout("fontfamily: testing font " + font
-                + ", width difference: " + Math.abs(defaultWidth - fontWidth));
+        let width1 = context.measureText(text).width;
 
-        if(defaultWidth != fontWidth)
+        context.font = "1000px " + font + ", sans-serif";
+        let sansWidth = context.measureText(text).width;
+
+        context.font = "1000px " + font;
+        let width2 = context.measureText(text).width;
+
+        if (FBTrace.DBG_FIREFONTFAMILY)
+          FBTrace.sysout("fontfamily: testing font " + font
+            + ", width difference: " + Math.abs(serifWidth - width1));
+
+        if (serifWidth == width1 && sansWidth == width2) {
           return font;
+        }
       }
       return '';
     },

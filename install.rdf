@@ -4,7 +4,7 @@
     <em:id>firefontfamily@firebugextensions.org</em:id>
     <em:type>2</em:type>
     <em:name>FireFontFamily</em:name>
-    <em:version>0.1.2</em:version>
+    <em:version>0.1.3</em:version>
     <em:creator>Heather Arthur</em:creator>
     <em:contributor></em:contributor>
     <em:description>Highlight the rendered font-family in Firebug</em:description>
@@ -12,7 +12,7 @@
       <Description>
         <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id> <!-- Firefox -->
         <em:minVersion>3.5</em:minVersion>
-        <em:maxVersion>11.0a1</em:maxVersion>
+        <em:maxVersion>14.0a1</em:maxVersion>
       </Description>
     </em:targetApplication>
   </Description>
